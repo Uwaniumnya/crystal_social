@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.spotify.app.remote'
     compileSdkVersion 34
     
     defaultConfig {
