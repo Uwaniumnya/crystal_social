@@ -23,9 +23,15 @@ migrate_working_dir/
 # is commented out by default.
 #.vscode/
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# Performance optimization - exclude large asset folders from Git
+# Comment out specific folders if you need them in version control
+assets/tarot/
+assets/shop/large_images/
+assets/decorations/high_res/
+assets/pets/animations/
+
+# Build and cache directories
+**/build/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies

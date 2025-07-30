@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "dart-code.dart-code",
+    "dart-code.flutter",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript-next",
+    "ms-vscode.js-debug-nightly",
+    "ms-vscode.vscode-js-profile-table"
+  ]
+}

@@ -10,6 +10,10 @@ jobs:
     name: Build APK on Ubuntu
     runs-on: ubuntu-latest
 
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+
     steps:
       - name: 📦 Checkout code
         uses: actions/checkout@v4
@@ -31,10 +35,24 @@ jobs:
         run: |
           flutter --version
           flutter doctor -v
-
-      - name: 📱 Set up Android SDK
+          
+      - name: 📱 Install Android SDK components
         run: |
-          flutter doctor --android-licenses || true
+          # Ensure Android SDK components are installed
+          sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools" || true
+
+      - name: 📱 Accept Android SDK licenses
+        run: |
+          # Set up Android SDK environment
+          export ANDROID_HOME=$ANDROID_SDK_ROOT
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          
+          # Accept all licenses
+          yes | sdkmanager --licenses 2>/dev/null || true
+          yes | flutter doctor --android-licenses 2>/dev/null || true
+          
+          # Verify setup
+          flutter doctor -v
 
       - name: 🧼 Clean
         run: flutter clean
