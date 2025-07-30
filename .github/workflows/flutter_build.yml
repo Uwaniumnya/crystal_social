@@ -21,9 +21,20 @@ jobs:
           java-version: '17'
 
       - name: ⚙️ Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.24.3'
+          channel: 'stable'
+          cache: true
+
+      - name: 🔍 Verify Flutter installation
+        run: |
+          flutter --version
+          flutter doctor -v
+
+      - name: 📱 Set up Android SDK
+        run: |
+          flutter doctor --android-licenses || true
 
       - name: 🧼 Clean
         run: flutter clean
