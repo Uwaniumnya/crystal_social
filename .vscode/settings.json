@@ -69,5 +69,11 @@
   "git.confirmSync": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
   "telemetry.telemetryLevel": "off",
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "emmet.showExpandedAbbreviation": "never",
+  "emmet.showSuggestionsAsSnippets": false,
+  "emmet.triggerExpansionOnTab": false,
+  "emmet.showAbbreviationSuggestions": false,
+  "emmet.includeLanguages": {},
+  "emmet.excludeLanguages": ["*"]
 }

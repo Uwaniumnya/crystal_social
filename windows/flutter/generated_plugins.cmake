@@ -14,7 +14,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   flutter_sparkle
   iris_method_channel
-  pasteboard
   permission_handler_windows
   record_windows
   rive_common

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:super_editor/super_editor.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
@@ -17,8 +17,10 @@ class EnhancedCollaborativeWritingTab extends StatefulWidget {
 class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeWritingTab>
     with TickerProviderStateMixin {
   
-  // Controllers & State
-  final quill.QuillController _controller = quill.QuillController.basic();
+  // Controllers & State - Super Editor
+  late MutableDocument _document;
+  late MutableDocumentComposer _composer;
+  late Editor _editor;
   final SupabaseClient supabase = Supabase.instance.client;
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
@@ -78,11 +80,90 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
   @override
   void initState() {
     super.initState();
+    _initializeSuperEditor();
     _initializeAnimations();
     _initializeUser();
     _loadCategories();
     _loadDocuments();
     _startAutoSave();
+  }
+
+  void _initializeSuperEditor() {
+    _document = MutableDocument(
+      nodes: [
+        ParagraphNode(
+          id: Editor.createNodeId(),
+          text: AttributedText(''),
+        ),
+      ],
+    );
+    _composer = MutableDocumentComposer();
+    _editor = createDefaultDocumentEditor(document: _document, composer: _composer);
+  }
+
+  String _serializeDocument() {
+    try {
+      // Get plain text from document for simple storage
+      final textNodes = <Map<String, dynamic>>[];
+      
+      for (int i = 0; i < _document.nodeCount; i++) {
+        final node = _document.getNodeAt(i);
+        if (node is TextNode) {
+          textNodes.add({
+            'type': 'text',
+            'text': node.text.text,
+            'id': node.id,
+          });
+        }
+      }
+      
+      return json.encode({'nodes': textNodes});
+    } catch (e) {
+      print('Error serializing document: $e');
+      return json.encode({'nodes': []});
+    }
+  }
+
+  void _deserializeDocument(String content) {
+    try {
+      final data = json.decode(content) as Map<String, dynamic>;
+      final nodesList = data['nodes'] as List? ?? [];
+      
+      final nodes = nodesList.map((nodeData) {
+        final nodeMap = nodeData as Map<String, dynamic>;
+        final type = nodeMap['type'] as String? ?? 'text';
+        
+        if (type == 'text') {
+          return ParagraphNode(
+            id: Editor.createNodeId(),
+            text: AttributedText(nodeMap['text'] as String? ?? ''),
+            metadata: nodeMap['metadata'] as Map<String, dynamic>? ?? {},
+          );
+        }
+        
+        // Default to paragraph for unknown types
+        return ParagraphNode(
+          id: Editor.createNodeId(),
+          text: AttributedText(''),
+          metadata: nodeMap['metadata'] as Map<String, dynamic>? ?? {},
+        );
+      }).toList();
+      
+      setState(() {
+        _document = MutableDocument(nodes: nodes.isEmpty ? [
+          ParagraphNode(
+            id: Editor.createNodeId(),
+            text: AttributedText(''),
+          )
+        ] : nodes);
+        _composer = MutableDocumentComposer();
+        _editor = createDefaultDocumentEditor(document: _document, composer: _composer);
+      });
+    } catch (e) {
+      print('Error deserializing document: $e');
+      // Reset to empty document on error
+      _initializeSuperEditor();
+    }
   }
 
   void _initializeAnimations() {
@@ -215,7 +296,7 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
     try {
       final response = await supabase.from('documents').insert({
         'title': title,
-        'content': json.encode(_controller.document.toDelta().toJson()),
+        'content': _serializeDocument(),
         'category_id': categoryId,
         'created_by': _currentUser?['id'],
         'updated_at': DateTime.now().toIso8601String(),
@@ -249,9 +330,7 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
         _documentTitleController.text = response['title'] ?? '';
         
         if (response['content'] != null) {
-          _controller.document = quill.Document.fromJson(
-            json.decode(response['content']),
-          );
+          _deserializeDocument(response['content']);
         }
         
         if (response['drawing_data'] != null) {
@@ -306,11 +385,7 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
 
   void _handleDocumentUpdate(Map<String, dynamic> data) {
     if (data['content'] != null) {
-      setState(() {
-        _controller.document = quill.Document.fromJson(
-          json.decode(data['content']),
-        );
-      });
+      _deserializeDocument(data['content']);
     }
   }
 
@@ -360,7 +435,7 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
     
     try {
       await supabase.from('documents').update({
-        'content': json.encode(_controller.document.toDelta().toJson()),
+        'content': _serializeDocument(),
         'drawing_data': json.encode(_drawingStrokes.map((s) => s.toJson()).toList()),
         'updated_at': DateTime.now().toIso8601String(),
       }).eq('id', _currentDocumentId!);
@@ -1127,8 +1202,14 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
   Widget _buildEditor() {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: quill.QuillEditor.basic(
-        controller: _controller,
+      child: SuperEditor(
+        editor: _editor,
+        document: _document,
+        composer: _composer,
+        stylesheet: defaultStylesheet.copyWith(
+          documentPadding: const EdgeInsets.all(16),
+        ),
+        inputSource: TextInputSource.keyboard,
       ),
     );
   }
@@ -1248,12 +1329,17 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
       context: context,
       builder: (context) => EnhancedEmojiPicker(
         onEmojiSelected: (emoji) {
-          _controller.replaceText(
-            _controller.selection.start,
-            0,
-            emoji,
-            TextSelection.collapsed(offset: _controller.selection.start + emoji.length),
-          );
+          // Insert emoji at current cursor position using super_editor
+          final composerSelection = _composer.selection;
+          if (composerSelection != null && composerSelection.isCollapsed) {
+            _editor.execute([
+              InsertTextRequest(
+                documentPosition: composerSelection.extent,
+                textToInsert: emoji,
+                attributions: {},
+              ),
+            ]);
+          }
           _onTextChanged();
         },
       ),
@@ -1313,20 +1399,30 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
   }
 
   void _formatText(String format) {
-    final selection = _controller.selection;
-    if (selection.isCollapsed) return;
+    final composerSelection = _composer.selection;
+    if (composerSelection == null || composerSelection.isCollapsed) return;
 
     try {
+      Attribution? attribution;
       switch (format) {
         case 'bold':
-          _controller.formatSelection(quill.Attribute.bold);
+          attribution = boldAttribution;
           break;
         case 'italic':
-          _controller.formatSelection(quill.Attribute.italic);
+          attribution = italicsAttribution;
           break;
         case 'underline':
-          _controller.formatSelection(quill.Attribute.underline);
+          attribution = underlineAttribution;
           break;
+      }
+      
+      if (attribution != null) {
+        _editor.execute([
+          ToggleTextAttributionsRequest(
+            documentRange: composerSelection,
+            attributions: {attribution},
+          ),
+        ]);
       }
       _onTextChanged();
     } catch (e) {
@@ -1349,8 +1445,23 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
   String _getDocumentPreview(String? content) {
     if (content == null) return 'No content';
     try {
-      final doc = quill.Document.fromJson(json.decode(content));
-      return doc.toPlainText().trim().replaceAll('\n', ' ');
+      // Deserialize the super_editor document and extract plain text
+      final documentData = json.decode(content);
+      if (documentData is Map<String, dynamic> && documentData.containsKey('nodes')) {
+        final nodes = documentData['nodes'] as List;
+        final buffer = StringBuffer();
+        
+        for (final node in nodes) {
+          if (node is Map<String, dynamic> && node['type'] == 'paragraph') {
+            final text = node['text'] as String? ?? '';
+            buffer.write(text);
+            buffer.write(' ');
+          }
+        }
+        
+        return buffer.toString().trim().replaceAll('\n', ' ');
+      }
+      return 'No content';
     } catch (e) {
       return 'Content preview unavailable';
     }
@@ -1400,7 +1511,8 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
     _searchController.dispose();
     _categoryController.dispose();
     _documentTitleController.dispose();
-    _controller.dispose();
+    _editor.dispose();
+    _composer.dispose();
     super.dispose();
   }
 

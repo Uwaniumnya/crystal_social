@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:super_editor/super_editor.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:convert';
 
@@ -25,7 +25,11 @@ class NoteEditorScreen extends StatefulWidget {
 }
 
 class _NoteEditorScreenState extends State<NoteEditorScreen> {
-  late QuillController _quillController;
+  // Super Editor components
+  late MutableDocument _document;
+  late MutableDocumentComposer _composer;
+  late Editor _editor;
+  
   late TextEditingController _titleController;
   late FocusNode _titleFocusNode;
   late FocusNode _contentFocusNode;
@@ -60,11 +64,88 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
     _titleController = TextEditingController();
     _titleFocusNode = FocusNode();
     _contentFocusNode = FocusNode();
-    _quillController = QuillController.basic();
+    
+    // Initialize super_editor components
+    _initializeSuperEditor();
 
     // Listen for changes
     _titleController.addListener(_onContentChanged);
-    _quillController.addListener(_onContentChanged);
+    // Note: We'll handle document changes differently with super_editor
+  }
+  
+  void _initializeSuperEditor() {
+    _document = MutableDocument(
+      nodes: [
+        ParagraphNode(
+          id: Editor.createNodeId(),
+          text: AttributedText(),
+        ),
+      ],
+    );
+    _composer = MutableDocumentComposer();
+    _editor = createDefaultDocumentEditor(document: _document, composer: _composer);
+  }
+  
+  String _serializeDocument() {
+    try {
+      final nodes = <Map<String, dynamic>>[];
+      
+      // Simple approach - get plain text and convert to our format
+      final plainText = _getPlainText();
+      if (plainText.isNotEmpty) {
+        nodes.add({
+          'type': 'paragraph',
+          'text': plainText,
+        });
+      }
+      
+      return json.encode({'nodes': nodes});
+    } catch (e) {
+      print('Error serializing document: $e');
+      return json.encode({'nodes': []});
+    }
+  }
+  
+  String _getPlainText() {
+    // Use the working plain text extraction method
+    return _getPlainTextFromDocument();
+  }
+  
+  void _deserializeDocument(String content) {
+    try {
+      final data = json.decode(content);
+      if (data is Map<String, dynamic> && data.containsKey('nodes')) {
+        final nodes = <DocumentNode>[];
+        final nodesList = data['nodes'] as List;
+        
+        for (final nodeData in nodesList) {
+          if (nodeData is Map<String, dynamic>) {
+            final text = nodeData['text'] as String? ?? '';
+            nodes.add(ParagraphNode(
+              id: Editor.createNodeId(),
+              text: AttributedText(text),
+            ));
+          }
+        }
+        
+        if (nodes.isEmpty) {
+          nodes.add(ParagraphNode(
+            id: Editor.createNodeId(),
+            text: AttributedText(),
+          ));
+        }
+        
+        setState(() {
+          _document = MutableDocument(nodes: nodes);
+          _composer = MutableDocumentComposer();
+          _editor = createDefaultDocumentEditor(document: _document, composer: _composer);
+        });
+      }
+    } catch (e) {
+      print('Error deserializing document: $e');
+      // Reset to empty document on error
+      _initializeSuperEditor();
+    }
   }
 
   void _loadNoteData() {
@@ -77,17 +158,43 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
       _isFavorite = note.isFavorite;
       _isPinned = note.isPinned;
 
-      // Load content into Quill editor
+      // Load content into Super Editor
       try {
         if (note.content.isNotEmpty) {
-          _quillController.document = Document.fromJson(
-            // Try to parse as JSON, fallback to plain text
-            _tryParseJson(note.content) ?? [{'insert': note.content + '\n'}],
-          );
+          // Try to parse as JSON first, fallback to plain text
+          final parsedData = _tryParseJson(note.content);
+          if (parsedData != null) {
+            _deserializeDocument(note.content);
+          } else {
+            // Create document from plain text
+            setState(() {
+              _document = MutableDocument(
+                nodes: [
+                  ParagraphNode(
+                    id: Editor.createNodeId(),
+                    text: AttributedText(note.content),
+                  ),
+                ],
+              );
+              _composer = MutableDocumentComposer();
+              _editor = createDefaultDocumentEditor(document: _document, composer: _composer);
+            });
+          }
         }
       } catch (e) {
         // Fallback to plain text
-        _quillController.document = Document()..insert(0, note.content);
+        setState(() {
+          _document = MutableDocument(
+            nodes: [
+              ParagraphNode(
+                id: Editor.createNodeId(),
+                text: AttributedText(note.content),
+              ),
+            ],
+          );
+          _composer = MutableDocumentComposer();
+          _editor = createDefaultDocumentEditor(document: _document, composer: _composer);
+        });
       }
     } else {
       // New note - focus on title
@@ -118,7 +225,8 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
     _titleController.dispose();
     _titleFocusNode.dispose();
     _contentFocusNode.dispose();
-    _quillController.dispose();
+    _editor.dispose();
+    _composer.dispose();
     super.dispose();
   }
 
@@ -268,12 +376,12 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              _buildToolbarButton(Icons.format_bold, () => _toggleFormat(Attribute.bold)),
-              _buildToolbarButton(Icons.format_italic, () => _toggleFormat(Attribute.italic)),
-              _buildToolbarButton(Icons.format_underlined, () => _toggleFormat(Attribute.underline)),
+              _buildToolbarButton(Icons.format_bold, () => _toggleFormat('bold')),
+              _buildToolbarButton(Icons.format_italic, () => _toggleFormat('italic')),
+              _buildToolbarButton(Icons.format_underlined, () => _toggleFormat('underline')),
               const SizedBox(width: 8),
-              _buildToolbarButton(Icons.format_list_bulleted, () => _toggleFormat(Attribute.ul)),
-              _buildToolbarButton(Icons.format_list_numbered, () => _toggleFormat(Attribute.ol)),
+              _buildToolbarButton(Icons.format_list_bulleted, () => _toggleFormat('ul')),
+              _buildToolbarButton(Icons.format_list_numbered, () => _toggleFormat('ol')),
               const SizedBox(width: 8),
               _buildToolbarButton(Icons.format_clear, () => _clearFormatting()),
             ],
@@ -292,21 +400,70 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
     );
   }
 
-  void _toggleFormat(Attribute attribute) {
-    _quillController.formatSelection(attribute);
+  void _toggleFormat(String format) {
+    final composerSelection = _composer.selection;
+    if (composerSelection == null || composerSelection.isCollapsed) return;
+
+    try {
+      Attribution? attribution;
+      switch (format) {
+        case 'bold':
+          attribution = boldAttribution;
+          break;
+        case 'italic':
+          attribution = italicsAttribution;
+          break;
+        case 'underline':
+          attribution = underlineAttribution;
+          break;
+        case 'ul':
+          // List handling would need more complex implementation
+          return;
+        case 'ol':
+          // List handling would need more complex implementation
+          return;
+      }
+      
+      if (attribution != null) {
+        _editor.execute([
+          ToggleTextAttributionsRequest(
+            documentRange: composerSelection,
+            attributions: {attribution},
+          ),
+        ]);
+      }
+    } catch (e) {
+      print('Error formatting text: $e');
+    }
   }
 
   void _clearFormatting() {
-    _quillController.formatSelection(Attribute.clone(Attribute.bold, null));
-    _quillController.formatSelection(Attribute.clone(Attribute.italic, null));
-    _quillController.formatSelection(Attribute.clone(Attribute.underline, null));
+    final composerSelection = _composer.selection;
+    if (composerSelection == null || composerSelection.isCollapsed) return;
+
+    try {
+      _editor.execute([
+        ToggleTextAttributionsRequest(
+          documentRange: composerSelection,
+          attributions: {boldAttribution, italicsAttribution, underlineAttribution},
+        ),
+      ]);
+    } catch (e) {
+      print('Error clearing formatting: $e');
+    }
   }
 
   Widget _buildContentEditor() {
     return Container(
       padding: const EdgeInsets.all(20),
-      child: QuillEditor.basic(
-        controller: _quillController,
+      child: SuperEditor(
+        editor: _editor,
+        document: _document,
+        composer: _composer,
+        stylesheet: defaultStylesheet.copyWith(
+          documentPadding: const EdgeInsets.all(16),
+        ),
+        inputSource: TextInputSource.keyboard,
       ),
     );
   }
@@ -447,17 +604,37 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
 
   // Helper methods
   int _getWordCount() {
-    final plainText = _quillController.document.toPlainText();
+    final plainText = _getPlainTextFromDocument();
     if (plainText.trim().isEmpty) return 0;
     return plainText.trim().split(RegExp(r'\s+')).length;
   }
+  
+  String _getPlainTextFromDocument() {
+    try {
+      // Simple implementation - we'll use the serialized format for now
+      final serialized = _serializeDocument();
+      final data = json.decode(serialized);
+      if (data is Map<String, dynamic> && data.containsKey('nodes')) {
+        final nodes = data['nodes'] as List;
+        final buffer = StringBuffer();
+        
+        for (final node in nodes) {
+          if (node is Map<String, dynamic> && node.containsKey('text')) {
+            buffer.write(node['text']);
+            buffer.write(' ');
+          }
+        }
+        
+        return buffer.toString().trim();
+      }
+      return '';
+    } catch (e) {
+      return '';
+    }
+  }
 
   String _getContentAsJson() {
-    try {
-      return jsonEncode(_quillController.document.toDelta().toJson());
-    } catch (e) {
-      return _quillController.document.toPlainText();
-    }
+    return _serializeDocument();
   }
 
   // Action methods
@@ -624,7 +801,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
 
   void _shareNote() {
     final title = _titleController.text.trim();
-    final content = _quillController.document.toPlainText().trim();
+    final content = _getPlainTextFromDocument().trim();
     
     String shareText = '';
     if (title.isNotEmpty) {
