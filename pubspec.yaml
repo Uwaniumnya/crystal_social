@@ -167,9 +167,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  riverpod_generator: ^2.6.5
-  riverpod_lint: ^2.6.5
-  custom_lint: ^0.7.5
+  riverpod_generator: ^2.4.3
+  riverpod_lint: ^2.3.13
+  custom_lint: ^0.6.7
 
   # The "flutter_lints" package below contains a set of recommended lints to
 
