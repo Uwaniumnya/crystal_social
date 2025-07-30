@@ -163,7 +163,7 @@ dependencies:
   lints: ^3.0.0
 
 dependency_overrides:
-  flutter_keyboard_visibility: 5.2.0
+  flutter_keyboard_visibility: 5.1.0
 
  
 
