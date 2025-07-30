@@ -94,7 +94,7 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # Audio & Media
-  audioplayers: ^6.5.0
+  audioplayers: ^5.2.1
   just_audio: ^0.9.39
   audio_session: ^0.1.21
   audio_service: ^0.18.12  # Added for background audio support
