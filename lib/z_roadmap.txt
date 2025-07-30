@@ -1,0 +1,122 @@
+
+
+
+
+
+Pastel Prestige Levels - partly done
+
+achievements - partly done
+
+Pastel Inventory™ (collectibles) - partly done
+Let users collect:
+Sparkles
+Stickers
+Reactions
+Animated badges (e.g. “Fluffy Typist Level 3”)
+Tied to message frequency, kindness levels, or sending exactly 69 cat emojis.
+
+Rewards program / shop - partly done
+
+
+Virtual Pets: . almost done
+Just use a PNG (the ones generated) and animate them in flutter (bounching, wagging, squishing
+Every user gets a little pet (like a chibi cat, bunny, axolotl) that lives in the corner of the chat and reacts to convos.
+Bounces when you get a message
+Snoozes when it’s quiet
+Puffs up with pride when you send cute messages
+Maybe you can pet them. Maybe they send stickers. Maybe I’m crying just thinking about it 😭💘
+- just need to add them to the shop, add pets and add accessories as well as achievements to unlock pets, sounds in general
+- make them appear in the inventory as well
+
+Pet Adventures
+You can send your virtual pet on an adventure every day, and it has a small chance to return with a shop item, if it doesnt, you get something cute that isnt an item
+
+Fighting game, inspiried by smash bros?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Home Space Customization - pretty much done, just need to add furniture images
+Objective: Let users design their own virtual home or personal space within the app.
+Furniture & Decorations: Unlock various furniture, wall colors, floor patterns, and decorative items (e.g., cute pillows, glowing lights, posters).
+Home Progression: As users send messages or interact with others, they earn rewards to customize their personal space. For example, sending 50 supportive messages unlocks a cozy reading nook.
+Home Parties: Host virtual home parties where users can invite friends to their space, decorate it together, and engage in activities like virtual house tours.
+Virtual Items: Collect virtual plants, pets, and accessories to decorate and personalize the space. Some items can level up over time (e.g., a glowing plant that grows the more you interact).
+
+Shop & Design Your Store
+Objective: Design and customize your own virtual store where users can sell items (could be stickers, crafts, or virtual items).
+Gameplay: Start with a basic store layout and customize it with displays, shelves, and decorations.
+Product Creation: Create virtual products to sell in your store (e.g., digital art, sticker packs, or unique emojis).
+Store Challenges: Complete tasks like “Set up a themed store for the holidays” or “Create a product launch event” to unlock new store items and decor.
+Trading: Open your store to others and trade items or sell your creations for in-app rewards.
+
+
+
+ Coloring Book Challenge - mostly done
+Objective: Color in intricate, themed pages or scenes.
+Gameplay: Users are given black-and-white drawings or coloring pages that range from simple designs (like cute animals) to more elaborate scenes (such as magical forests or cosmic landscapes).
+Brush Tools: Users can choose different brush sizes and color palettes to personalize the art.
+Time Challenges: Complete coloring challenges in limited time or with special color restrictions.
+Rewards: Collect unique art styles or special color palettes as rewards for completing pages. Share the artwork with friends and get feedback or reactions.
+sanrio character
+planzen
+cloth designer
+Code is done, gotta add the image files, create them in the code plus their categories, gotta remove watermarks from images and turn them into webp
+https://www.freepik.com/free-photos-vectors/coloring-pages
+https://de.pinterest.com/pin/869687378039316655/
+https://de.pinterest.com/pin/3307399721651105/
+https://www.creativefabrica.com/product/40-mandala-coloring-pages-for-adult/ref/7062004/?campaign=ref/7062004/?campaign=cp
+https://www.creativefabrica.com/product/200-cute-kawaii-coloring-pages-for-kids-2/ref/7062004/?campaign=ref/7062004/?campaign=cp
+https://www.creativefabrica.com/product/flowers-zentangle-coloring-book-kdp/ref/7062004/?campaign=cp
+https://www.creativefabrica.com/product/200-butterfly-coloring-pages-for-adults-2/ref/7062004/?campaign=ref/7062004/?campaign=cp
+Paper dolls coloring
+
+9- CrystalGarden™ – Social Idle Game Add-on - mostly done, need to apply assets
+Every message waters a flower in your chat garden.
+Talk more → Garden grows.
+Be chaotic → Your plant grows weird (like a mushroom with hearts).
+Friendship = Floriculture. 💐🌱
+
+ Cosmic Reflection™
+Users unlock custom mirror reflections that show their chat personality:
+Mirror of Vibes: The mirror changes its design based on your behavior — if you’re posting lots of positive messages, it sparkles with gentle light, but if you’re more chaotic, it shows a swirling galaxy.
+Messages Reflect Personality: Tap your mirror and the app tells you what personal traits you've been showing in your chats (e.g., “You’ve been sending lots of love lately” or “You’ve been a chaotic soul recently 💀”).
+
+
+play with pets (like pou maybe feed them with stuff from garden
+
+club penguin
+
+
+28- Pastel Prestige Levels - partöy done
+The more you:
+Send sparkly messages
+Per log-in
+Use reaction stickers
+Comfort your friends
+…the higher your Prestige Level becomes:
+Level 1: “Newborn Bean 🌱”
+Level 10: “Icon of Soft Power 💫”
+Level 20: “Eternal Glitter Being 👑”
+Each prestige level unlocks exclusive UI themes, sounds, and bubble trails.
+Your typing indicator becomes more powerful with each level.
+
+
+Maybe make push notifications not be full message but more:
+“User”, you have a message from “Sender”
+
+
+
+

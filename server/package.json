@@ -1,0 +1,29 @@
+{
+  "name": "crystal-casino-servers",
+  "version": "1.0.0",
+  "description": "WebSocket servers for Crystal Casino multiplayer games",
+  "main": "sicbo-server.js",
+  "scripts": {
+    "start": "node sicbo-server.js",
+    "dev": "nodemon sicbo-server.js",
+    "start:blackjack": "node blackjack-server.js",
+    "dev:blackjack": "nodemon blackjack-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "sicbo",
+    "blackjack",
+    "casino",
+    "multiplayer",
+    "websocket",
+    "game"
+  ],
+  "author": "Crystal Casino Team",
+  "license": "MIT"
+}

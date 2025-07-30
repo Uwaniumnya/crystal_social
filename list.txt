@@ -1,0 +1,227 @@
+
+
+
+
+Tarot adding:
+Next, lets add the next deck, with only the major arcana
+Assets are in:
+assets\tarot\deck7\backs
+assets\tarot\deck7\fronts
+
+That deck should only be selectable if its in the users inventory. It is called the Golden Bit Deck
+
+At SQL converint nr 46 rn
+
+
+
+
+
+For admin Page, the password:  ['admin123', 'admin', 'password', 'support']
+
+
+
+RELEASE:
+
+
+
+
+Can you create an SQL file to integrate this file into Supabase in the Folder: SQL
+
+coin erning is next
+
+UPDATE 2:
+
+add more avatar decorations
+register pets in pet_list for fictional pets
+cut pets to content wwith gimp
+make the home design stuff
+scary and cute pet list
+home_space_screen.dart real implementation of furniture and actual systems, ask what it does rn
+Add the Rest of the Tarot Decks to buy
+Tarot Symbols and the such
+Use Tarot Cards Back instead of Symbols
+Add more ringtones 
+Add more notification sounds
+Create Mood Tracker Screen
+Register Achievements
+More Shop Items
+Achievement rewards
+Add bundles in shop
+
+Pets and accessories to add:
+Plant based
+Panda pet 
+Stoner Sunglasses
+Joint
+Zigarette 
+Smoking Pipe
+Propeller Hat
+Myling
+More in the style of the crpytid
+Microphone
+Boba
+killer rabbit of Caerbannog
+
+
+
+
+Nr 53 or 54
+
+
+
+
+
+
+
+
+
+
+
+Give me a list of creepy, mysterious and dark creatures like this wwe could generate as pets in the same style
+
+
+
+
+
+
+
+
+
+
+
+
+Generate in this style, with no shadow, on a transparent background:  Chinese Zodiac Animals 
+Generate in this style, with no shadow, on a transparent background:  Anubis (Jackal God) –
+Generate in this style, with no shadow, on a transparent background:  Noble Deer / Spirit Deer 
+Generate in this style, with no shadow, on a transparent background:  Aggretsuko 
+Generate in this style, with no shadow, on a transparent background:  Dust Monster from Spirited Away
+Generate in this style, with no shadow, on a transparent background:  Sans (Undertale)
+Generate in this style, with no shadow, on a transparent background:  Tenna (Deltarune)
+Generate in this style, with no shadow, on a transparent background:  Vivi (Final Fantasy)
+Generate in this style, with no shadow, on a transparent background:  
+Generate in this style, with no shadow, on a transparent background:  
+Generate in this style, with no shadow, on a transparent background:  
+Generate in this style, with no shadow, on a transparent background:  
+
+
+
+
+
+ 
+
+.\update_supabase_credentials.ps1 -NewProjectUrl "https://zdsjtjbzhiejvpuahnlk.supabase.co" -NewAnonKey "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpkc2p0amJ6aGllanZwdWFobmxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MjAyMzYsImV4cCI6MjA2OTM5NjIzNn0.CSPzbngxKJHrHD8oNMFaYzvKXzNzMENFtaWu9Vy2rV0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Update 3:
+
+. Zen Garden
+Objective: Create the most peaceful Zen Garden with limited moves.
+Gameplay: Users have a small virtual Zen garden space and must place stones, sand, and plants in the correct order to create balance.
+Limited Moves: Players have a set number of moves or time to arrange their garden. Every move must help build harmony in the design.
+Zen Boosts: Unlock peaceful animals (like koi fish, butterflies) that add extra points or calming effects.
+Visual Rewards: Share your garden creations in your profile or send them to friends as a peaceful gift.
+
+
+Mindscape unlocker
+after sending a big amount of messages to a certain user, you unlock an image of their mindscape, which will be shown somewhere
+need an AI to generate those
+
+
+
+
+
+
+GAMES UPDATE:
+
+Crystal Games
+Be able to launch Crystal Social from Crystal Games
+Dress up Game with character design
+Minigames
+Mario Party Style Game
+Many Board games
+Casino extensions + gpt
+Fighting game, inspiried by smash bros?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+stars_headpiece - petname_stars_headpiece.png
+gem_headpiece - petname_gem_headpiece.png
+bee_headpiece - petname_bee_headpiece.png
+unicorn_horn - petname_unicorn_horn.png
+bow_headband - petname_bow_headband.png
+flower_crown - petname_flower_crown.png
+flower_hairpiece - petname_flower_hairpiece.png
+bow - petname_bow.png
+fish_clip - petname_fish_clip.png
+heart_glasses - petname_heart_glasses.png
+sunglasses - petname_sunglasses.png
+glasses - petname_glasses.png
+bunny_headset - petname_bunny_headset.png
+cat_ears - petname_cat_ears.png
+top_hat - petname_top_hat.png
+teddy - petname_teddy.png
+cupcake - petname_cupcake.png
+drink - petname_drink.png
+tea - petname_tea.png
+cloud_tattoo - petname_cloud_tattoo.png
+crown
+
+
+
+
+Codes:
+Can you look at this code, enhance it, maybe add some features
+
+Generate an Icon for in this style
+
+
+
+
+
+
+
+
+
+

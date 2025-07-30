@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "978131695620",
+    "firebase_url": "https://crystalapp-579fb-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "crystalapp-579fb",
+    "storage_bucket": "crystalapp-579fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978131695620:android:e90e2a68eeebd789cedd51",
+        "android_client_info": {
+          "package_name": "com.uwaniumnya.crystal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd89JRRHAoKSChIoMfM3zZzkrVOyI4tjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

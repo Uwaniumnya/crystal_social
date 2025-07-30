@@ -1,0 +1,6 @@
+{
+  "name": "send-onesignal-notification",
+  "version": "1.0.0",
+  "description": "Edge function for sending OneSignal notifications",
+  "entrypoint": "./index.ts"
+}

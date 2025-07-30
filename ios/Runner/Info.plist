@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- App Identity -->
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Crystal Social</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Crystal Social</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	
+	<!-- iOS Requirements -->
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	
+	<!-- Interface Orientations -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	
+	<!-- Performance Optimizations -->
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	
+	<!-- Privacy Permissions with User-Friendly Descriptions -->
+	<key>NSCameraUsageDescription</key>
+	<string>Crystal Social needs camera access to let you take photos for your profile, share moments with friends, and capture memories in your virtual spaces.</string>
+	
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Crystal Social needs microphone access to record voice messages, participate in audio chats, and communicate with your friends.</string>
+	
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Crystal Social needs photo library access to let you share images, set profile pictures, and save memories from your Crystal experiences.</string>
+	
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Crystal Social can save photos and screenshots from your magical moments, tarot readings, and shared memories to your photo library.</string>
+	
+	<key>NSContactsUsageDescription</key>
+	<string>Crystal Social can access your contacts to help you find and connect with friends who are also using the app.</string>
+	
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Crystal Social can use your location to provide location-based features like local horoscope insights and finding nearby Crystal users.</string>
+	
+	<key>NSCalendarsUsageDescription</key>
+	<string>Crystal Social can access your calendar to remind you about important astrological events, tarot reading sessions, and friend meetups.</string>
+	
+	<key>NSRemindersUsageDescription</key>
+	<string>Crystal Social can create reminders for your daily horoscope, pet care schedules, and friendship milestones.</string>
+	
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Crystal Social can access your music library to enhance your experience with personalized soundtracks for meditation, tarot readings, and virtual garden activities.</string>
+	
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Crystal Social can use speech recognition to convert your voice messages to text and help with voice-activated features.</string>
+	
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Crystal Social uses Bluetooth to connect with compatible accessories and enable seamless audio experiences during calls and meditation sessions.</string>
+	
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Crystal Social can use Bluetooth to share content with nearby devices and connect with Crystal-compatible accessories.</string>
+	
+	<key>NSFaceIDUsageDescription</key>
+	<string>Crystal Social can use Face ID to securely authenticate your account and protect your personal mystical data.</string>
+	
+	<!-- URL Schemes for Deep Linking -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>crystal-social-deeplink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>crystalapp</string>
+				<string>crystal-social</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>crystal-social-universal</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>https</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- App Transport Security -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>supabase.co</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+			</dict>
+			<key>firebase.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+			</dict>
+			<key>agora.io</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+			</dict>
+		</dict>
+	</dict>
+	
+	<!-- Background Modes -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>background-processing</string>
+		<string>background-fetch</string>
+		<string>remote-notification</string>
+		<string>voip</string>
+	</array>
+	
+	<!-- Required Device Capabilities -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	
+	<!-- Status Bar Configuration -->
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	
+	<!-- App Categories -->
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
+	
+	<!-- File Sharing -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	
+	<!-- Document Types -->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Images</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.image</string>
+				<string>public.jpeg</string>
+				<string>public.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Audio Files</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.audio</string>
+				<string>public.mp3</string>
+				<string>public.aac</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- Exported UTIs -->
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.crystal-social.tarot-reading</string>
+			<key>UTTypeDescription</key>
+			<string>Crystal Social Tarot Reading</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cstarot</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	
+	<!-- Push Notifications -->
+	<key>aps-environment</key>
+	<string>development</string>
+	
+	<!-- Firebase Configuration -->
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<true/>
+	<key>FIREBASE_CRASHLYTICS_COLLECTION_ENABLED</key>
+	<true/>
+	
+	<!-- OneSignal Configuration -->
+	<key>OneSignalAppId</key>
+	<string>6f262379-2f9e-4d15-a378-25e682b6b78d</string>
+	
+	<!-- Agora Configuration -->
+	<key>AgoraAppId</key>
+	<string>5c1b6094e0eb4ec7820ae6b706b85260</string>
+	
+	<!-- Spotify SDK Configuration -->
+	<key>SpotifyClientId</key>
+	<string>1288db98cd1e41a19bd18d721df20fae</string>
+	<key>SpotifyRedirectUri</key>
+	<string>crystalapp://spotify-callback</string>
+	
+	<!-- Queries Schemes for iOS 14+ -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>spotify</string>
+		<string>instagram</string>
+		<string>twitter</string>
+		<string>tiktok</string>
+		<string>snapchat</string>
+		<string>whatsapp</string>
+		<string>telegram</string>
+		<string>discord</string>
+		<string>mailto</string>
+		<string>tel</string>
+		<string>sms</string>
+		<string>maps</string>
+		<string>googlemaps</string>
+	</array>
+	
+	<!-- App Store Configuration -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	
+	<!-- Minimum iOS Version -->
+	<key>MinimumOSVersion</key>
+	<string>12.0</string>
+	
+	<!-- Support for iPad -->
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	
+	<!-- Launch Screen Configuration -->
+	<key>UILaunchScreens</key>
+	<array>
+		<dict>
+			<key>UIImageName</key>
+			<string>LaunchImage</string>
+		</dict>
+	</array>
+</dict>
+</plist>

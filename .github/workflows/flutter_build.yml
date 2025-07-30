@@ -1,0 +1,67 @@
+name: Flutter Build APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build APK on Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: ⚙️ Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      - name: 🧼 Clean
+        run: flutter clean
+
+      - name: 📚 Get Dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build APK
+        run: flutter build apk --release --target-platform android-arm64
+
+      - name: 🔖 Extract version from pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d ':' -f2 | xargs)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: 📤 Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Crystal Social v${{ steps.version.outputs.version }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📨 Send to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            VERSION="${{ steps.version.outputs.version }}"
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+
+            curl -F "file=@build/app/outputs/flutter-apk/app-release.apk" \
+                 -F "payload_json={\"content\": \"✨ New **CrystalApp** APK Released! ✨\\n📱 **Version:** $VERSION\\n🕒 **Built at:** $TIMESTAMP\\n🔗 [Download from GitHub Releases](https://github.com/${{ github.repository }}/releases)\\nLet the magic begin 🧚‍♀️\"}" \
+                 $DISCORD_WEBHOOK
+          else
+            echo "Discord webhook not configured, skipping notification"
+          fi

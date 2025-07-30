@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Crystal Social Brand Colors -->
+    <color name="notification_color">#6A5ACD</color>
+    <color name="primary_color">#6A5ACD</color>
+    <color name="primary_dark">#483D8B</color>
+    <color name="accent_color">#FF69B4</color>
+    <color name="background_color">#F8F8FF</color>
+    <color name="surface_color">#FFFFFF</color>
+    <color name="error_color">#FF4444</color>
+    <color name="success_color">#4CAF50</color>
+    <color name="warning_color">#FF9800</color>
+    
+    <!-- Status Bar Colors -->
+    <color name="status_bar_color">#483D8B</color>
+    <color name="navigation_bar_color">#000000</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#BDBDBD</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    
+    <!-- Common Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="grey_light">#F5F5F5</color>
+    <color name="grey_medium">#BDBDBD</color>
+    <color name="grey_dark">#757575</color>
+</resources>

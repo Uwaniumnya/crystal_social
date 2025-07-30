@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Internal Storage -->
+    <files-path name="files" path="." />
+    
+    <!-- External Storage -->
+    <external-files-path name="external_files" path="." />
+    
+    <!-- Cache Directory -->
+    <cache-path name="cache" path="." />
+    
+    <!-- External Cache Directory -->
+    <external-cache-path name="external_cache" path="." />
+    
+    <!-- Media Directory -->
+    <external-path name="external_storage" path="." />
+    
+    <!-- Downloads Directory -->
+    <external-files-path name="downloads" path="Download" />
+    
+    <!-- Pictures Directory -->
+    <external-files-path name="pictures" path="Pictures" />
+    
+    <!-- Camera Images -->
+    <external-files-path name="camera_images" path="Pictures/Crystal" />
+    
+    <!-- Audio Files -->
+    <external-files-path name="audio" path="Music/Crystal" />
+</paths>
