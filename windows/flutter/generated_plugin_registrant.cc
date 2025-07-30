@@ -17,6 +17,7 @@
 #include <firebase_core/firebase_core_plugin_c_api.h>
 #include <flutter_sparkle/flutter_sparkle_plugin.h>
 #include <iris_method_channel/iris_method_channel_plugin_c_api.h>
+#include <pasteboard/pasteboard_plugin.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <record_windows/record_windows_plugin_c_api.h>
 #include <rive_common/rive_plugin.h>
@@ -46,6 +47,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FlutterSparklePlugin"));
   IrisMethodChannelPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("IrisMethodChannelPluginCApi"));
+  PasteboardPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("PasteboardPlugin"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   RecordWindowsPluginCApiRegisterWithRegistrar(
