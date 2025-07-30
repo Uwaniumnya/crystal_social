@@ -141,7 +141,7 @@ dependencies:
   quiver: ^3.0.1
   hashids2: ^2.0.0
   collection: ^1.17.1
-  spotify_sdk: ^3.0.2 # Updated to fix compilation issues
+  spotify_sdk: ^2.2.0  # Using older stable version
   crypto: ^3.0.3
   connectivity_plus: ^5.0.2
   all_validations_br: ^3.0.0

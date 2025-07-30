@@ -22,7 +22,7 @@ For admin Page, the password:  ['admin123', 'admin', 'password', 'support']
 
 RELEASE:
 
-
+Import all shop items, like pets
 
 
 Can you create an SQL file to integrate this file into Supabase in the Folder: SQL
@@ -49,27 +49,45 @@ Achievement rewards
 Add bundles in shop
 
 Pets and accessories to add:
-Plant based
 Panda pet 
-Stoner Sunglasses
-Joint
-Zigarette 
-Smoking Pipe
-Propeller Hat
-Myling
-More in the style of the crpytid
-Microphone
-Boba
-killer rabbit of Caerbannog
+
+
+
+Bundles and Daily Discounts in shop
+
+
+
+edge functions for other stuff creation
+
+
+git add .
+git commit -m "!"
+git push origin main
+
+Make that a script for ease of access
+
+Run the auto_commit.psl script
+.\auto_commit.ps1
 
 
 
 
-Nr 53 or 54
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+dart run scripts/sync_shop_items_standalone.dart
 
 
 
@@ -90,15 +108,8 @@ Give me a list of creepy, mysterious and dark creatures like this wwe could gene
 
 
 
-Generate in this style, with no shadow, on a transparent background:  Chinese Zodiac Animals 
-Generate in this style, with no shadow, on a transparent background:  Anubis (Jackal God) –
-Generate in this style, with no shadow, on a transparent background:  Noble Deer / Spirit Deer 
-Generate in this style, with no shadow, on a transparent background:  Aggretsuko 
-Generate in this style, with no shadow, on a transparent background:  Dust Monster from Spirited Away
-Generate in this style, with no shadow, on a transparent background:  Sans (Undertale)
-Generate in this style, with no shadow, on a transparent background:  Tenna (Deltarune)
-Generate in this style, with no shadow, on a transparent background:  Vivi (Final Fantasy)
-Generate in this style, with no shadow, on a transparent background:  
+
+
 Generate in this style, with no shadow, on a transparent background:  
 Generate in this style, with no shadow, on a transparent background:  
 Generate in this style, with no shadow, on a transparent background:  
@@ -107,7 +118,7 @@ Generate in this style, with no shadow, on a transparent background:
 
 
 
- 
+
 
 .\update_supabase_credentials.ps1 -NewProjectUrl "https://zdsjtjbzhiejvpuahnlk.supabase.co" -NewAnonKey "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpkc2p0amJ6aGllanZwdWFobmxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MjAyMzYsImV4cCI6MjA2OTM5NjIzNn0.CSPzbngxKJHrHD8oNMFaYzvKXzNzMENFtaWu9Vy2rV0"
 
