@@ -96,7 +96,7 @@ dependencies:
   # Audio & Media
   audioplayers: ^6.5.0
   just_audio: ^0.10.4
-  audio_session: ^0.2.2
+  audio_session: ^0.1.21
   audio_service: ^0.18.12  # Added for background audio support
   flutter_audio_waveforms: ^1.2.0
   record: ^6.0.0
