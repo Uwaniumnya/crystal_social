@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   build:
     name: Build APK on Ubuntu
@@ -70,13 +74,15 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: 📤 Upload to GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: Crystal Social v${{ steps.version.outputs.version }}
           files: build/app/outputs/flutter-apk/app-release.apk
           draft: false
           prerelease: false
+          make_latest: true
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
