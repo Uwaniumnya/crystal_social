@@ -93,9 +93,27 @@ jobs:
           if [ -n "$DISCORD_WEBHOOK" ]; then
             VERSION="${{ steps.version.outputs.version }}"
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
-
-            curl -F "file=@build/app/outputs/flutter-apk/app-release.apk" \
-                 -F "payload_json={\"content\": \"✨ New **CrystalApp** APK Released! ✨\\n📱 **Version:** $VERSION\\n🕒 **Built at:** $TIMESTAMP\\n🔗 [Download from GitHub Releases](https://github.com/${{ github.repository }}/releases)\\nLet the magic begin 🧚‍♀️\"}" \
+            
+            # Get APK file size in MB
+            APK_SIZE=$(du -m build/app/outputs/flutter-apk/app-release.apk | cut -f1)
+            
+            # Send notification with download link (no file attachment due to size limits)
+            curl -H "Content-Type: application/json" \
+                 -d "{
+                   \"embeds\": [{
+                     \"title\": \"✨ New Crystal Social APK Released!\",
+                     \"description\": \"🎉 A new version of **Crystal Social** has been built and released!\",
+                     \"color\": 5814783,
+                     \"fields\": [
+                       {\"name\": \"📱 Version\", \"value\": \"$VERSION\", \"inline\": true},
+                       {\"name\": \"📏 Size\", \"value\": \"${APK_SIZE}MB\", \"inline\": true},
+                       {\"name\": \"🕒 Built at\", \"value\": \"$TIMESTAMP\", \"inline\": true},
+                       {\"name\": \"� Download\", \"value\": \"[📱 Download APK from GitHub Releases](https://github.com/${{ github.repository }}/releases/tag/v$VERSION)\", \"inline\": false}
+                     ],
+                     \"footer\": {\"text\": \"Crystal Social CI/CD\"},
+                     \"thumbnail\": {\"url\": \"https://github.com/fluidicon.png\"}
+                   }]
+                 }" \
                  $DISCORD_WEBHOOK
           else
             echo "Discord webhook not configured, skipping notification"
