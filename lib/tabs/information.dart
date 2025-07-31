@@ -77,6 +77,29 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
     const Color(0xFFDDA0DD), // Plum
   ];
 
+  // Icon mapping for categories (using constant IconData)
+  static const Map<int, IconData> _iconMapping = {
+    57346: Icons.folder,
+    57347: Icons.description,
+    57348: Icons.article,
+    57349: Icons.note,
+    57350: Icons.book,
+    57351: Icons.library_books,
+    57352: Icons.assignment,
+    57353: Icons.topic,
+    57354: Icons.category,
+    57355: Icons.label,
+    // Add more as needed
+  };
+
+  // Helper method to get icon safely
+  IconData _getIconForCategory(dynamic iconCode) {
+    if (iconCode is int && _iconMapping.containsKey(iconCode)) {
+      return _iconMapping[iconCode]!;
+    }
+    return Icons.folder; // Default fallback icon
+  }
+
   @override
   void initState() {
     super.initState();
@@ -642,7 +665,7 @@ class _EnhancedCollaborativeWritingTabState extends State<EnhancedCollaborativeW
                 ..._categories.map((category) => _buildCategoryChip(
                   category['id'],
                   category['name'],
-                  IconData(category['icon'], fontFamily: 'MaterialIcons'),
+                  _getIconForCategory(category['icon']),
                   Color(category['color']),
                 )),
               ],

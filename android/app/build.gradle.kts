@@ -45,6 +45,10 @@ android {
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
         }
+        
+        // Manifest placeholders for deep linking/redirect functionality
+        manifestPlaceholders["redirectHostName"] = "callback"
+        manifestPlaceholders["redirectSchemeName"] = "crystalapp"
     }
 
     signingConfigs {
@@ -89,8 +93,7 @@ dependencies {
 
  implementation("com.onesignal:OneSignal:[5.1.6, 5.1.99]")
 
-  // Spotify SDK
-  implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
+  // Spotify SDK is now handled by the spotify-app-remote module
 
   // TODO: Add the dependencies for Firebase products you want to use
   // When using the BoM, don't specify versions in Firebase dependencies

@@ -7,8 +7,14 @@ $versionFile = "commit_version.txt"
 # Function to read current version
 function Get-CurrentVersion {
     if (Test-Path $versionFile) {
-        $version = Get-Content $versionFile -Raw
-        return [double]$version.Trim()
+        $versionContent = Get-Content $versionFile -Raw
+        $versionString = $versionContent.Trim()
+        try {
+            return [double]::Parse($versionString, [System.Globalization.CultureInfo]::InvariantCulture)
+        } catch {
+            Write-Host "Error parsing version from file, resetting to 1.0" -ForegroundColor Yellow
+            return 1.0
+        }
     } else {
         # Start with version 1.0 if file doesn't exist
         return 1.0
@@ -30,13 +36,20 @@ function Get-NextVersion {
 # Function to save version
 function Set-CurrentVersion {
     param([double]$version)
-    $version.ToString("F1") | Out-File -FilePath $versionFile -Encoding UTF8 -NoNewline
+    $versionString = $version.ToString("F1", [System.Globalization.CultureInfo]::InvariantCulture)
+    $versionString | Out-File -FilePath $versionFile -Encoding UTF8 -NoNewline
 }
 
 try {
     # Get current version
     $currentVersion = Get-CurrentVersion
     Write-Host "Current version: $currentVersion" -ForegroundColor Cyan
+    
+    # Debug: Show what's in the version file
+    if (Test-Path $versionFile) {
+        $fileContent = Get-Content $versionFile -Raw
+        Write-Host "Version file content: '$fileContent'" -ForegroundColor DarkGray
+    }
     
     # Calculate next version
     $nextVersion = Get-NextVersion -currentVersion $currentVersion
