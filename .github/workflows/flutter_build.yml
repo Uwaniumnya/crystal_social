@@ -13,9 +13,6 @@ jobs:
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
       ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
-      # Disable symlinks for Windows compatibility
-      PUB_CACHE: ${{ github.workspace }}/.pub_cache
-      FLUTTER_STORAGE_BASE_URL: https://storage.googleapis.com
 
     steps:
       - name: 📦 Checkout code
@@ -33,23 +30,11 @@ jobs:
           flutter-version: '3.24.3'
           channel: 'stable'
           cache: true
-          
-      - name: 🔧 Configure Flutter for cross-platform builds
-        run: |
-          flutter config --no-analytics
-          # Disable symlinks for plugins to avoid cross-drive issues
-          flutter config --enable-linux-desktop
-          flutter config --enable-windows-desktop
-          flutter config --enable-macos-desktop
 
       - name: 🔍 Verify Flutter installation
         run: |
           flutter --version
           flutter doctor -v
-          echo "PUB_CACHE: $PUB_CACHE"
-          echo "Current working directory: $(pwd)"
-          echo "Available disk space:"
-          df -h
           
       - name: 📱 Install Android SDK components
         run: |
@@ -72,33 +57,11 @@ jobs:
       - name: 🧼 Clean
         run: flutter clean
 
-      - name: � Fix symlink issues (Windows compatibility)
-        run: |
-          # Remove any existing problematic symlinks
-          rm -rf windows/flutter/ephemeral/.plugin_symlinks 2>/dev/null || true
-          rm -rf linux/flutter/ephemeral/.plugin_symlinks 2>/dev/null || true
-          rm -rf macos/Flutter/ephemeral/.plugin_symlinks 2>/dev/null || true
-          
-          # Ensure pub cache directory exists
-          mkdir -p $PUB_CACHE
-          
-          echo "Symlink cleanup completed"
-
-      - name: �📚 Get Dependencies
+      - name: 📚 Get Dependencies
         run: flutter pub get
 
       - name: 🏗️ Build APK
-        run: |
-          # Attempt build with retry logic for symlink issues
-          echo "Building APK with symlink handling..."
-          
-          # Try building with --no-pub first to skip pub get if symlinks failed
-          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons --no-pub 2>/dev/null || {
-            echo "Build with --no-pub failed, trying with full pub resolution..."
-            flutter clean
-            flutter pub get --verbose
-            flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
-          }
+        run: flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
 
       - name: 🔖 Extract version from pubspec.yaml
         id: version

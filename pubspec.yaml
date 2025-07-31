@@ -20,6 +20,7 @@ version: 1.0.0+3
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.24.0"
 
 
 # Dependencies specify other packages that your package needs in order to work.
@@ -106,7 +107,7 @@ dependencies:
   # Communications & Social
   agora_rtc_engine: ^6.2.1
   emoji_picker_flutter: ^4.3.0
-  super_editor: ^0.3.0-dev.29
+  super_editor: ^0.3.0-dev.20
   flutter_markdown: ^0.7.7
 
   # File & Media Handling
@@ -162,6 +163,8 @@ dependencies:
   # Linting
   flutter_lints: ^3.0.0
   lints: ^3.0.0
+ 
+  
 
  
 
